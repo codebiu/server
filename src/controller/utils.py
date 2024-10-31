@@ -2,7 +2,8 @@ from fastapi import File, UploadFile,APIRouter
 from config.fastapi_config import app
 from service.fileService import fileService
 router = APIRouter()
-@router.post("/upload")
+
+@router.post("/upload", summary="上传文件")
 async def upload_file(file: UploadFile = File(...)):
     '''上传文件'''
     return await fileService.upload_file_service(file)

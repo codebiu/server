@@ -38,5 +38,5 @@ class console:
 # 输出带颜色的日志
 console.log('...log配置完成')
 
-console.log('项目根路径:'+path_base)
+console.log('项目根路径:'+str(path_base))
 
