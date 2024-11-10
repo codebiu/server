@@ -30,11 +30,18 @@ pip3 install sqlmodel
 pip3 install python-multipart
 # 异步sqlite aiofiles
 pip3 install aiosqlite aiofiles
+# 配置文件pyyaml
+pip3 install pyyaml
+# 嵌入式图数据库kuzu
+pip3 install kuzu
+# 图数据库neo4j
+pip3 install neo4j
 # full server
-pip3 install uvicorn fastapi sqlmodel python-multipart aiosqlite aiofiles
+pip3 install uvicorn fastapi sqlmodel python-multipart aiosqlite aiofiles pyyaml neo4j kuzu
 
 # 导出
 conda env export > environment.yaml
+conda list -e > requirements.txt
 # 导入 test_all
 conda env create -f environment.yml -n test_all
 # 把环境 rcnn 重命名成 tf

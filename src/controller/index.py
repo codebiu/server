@@ -11,12 +11,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi import APIRouter, status
 from fastapi.openapi.docs import get_swagger_ui_html
 
-
-html_file = open(path_html / "index.html", "r").read()
-# 配置前端静态文件服务
-app.mount(
-    "/assets", StaticFiles(directory=path_html / "assets", html=True), name="assets"
-)
+# 静态首页
+html_file = open(path_html / "index.html", "r", encoding="utf-8").read()
 
 
 # 首页 app非router挂载
@@ -24,6 +20,12 @@ app.mount(
 async def server():
     console.log("初始首页html")
     return html_file
+
+
+# 配置前端静态文件服务
+app.mount(
+    "/assets", StaticFiles(directory=path_html / "assets", html=True), name="assets"
+)
 
 
 # 自定义 Swagger 文档路由，指向本地的 Swagger UI 文件
