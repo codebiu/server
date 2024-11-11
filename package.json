@@ -4,6 +4,7 @@
   "scripts": {
     "activate_env": "source activate & conda activate server_py",
     "dev": "conda activate pc_py & python src/server_main.py",
+    "debug": "conda activate pc_py & python src/server_main.py",
     "build": "conda activate server_py & pyinstaller --distpath=dist --workpath=build  server_main.spec",
     "build_base": "conda activate test_all & pyinstaller --contents-directory . --icon=source/img/ion/favicon.ico --distpath=dist --workpath=build --add-data=source;source -D  src/server_main.py",
     "build1": "conda activate test_all & pyinstaller --icon=source/img/ion/favicon.ico -D -w   src/server_main.py",
