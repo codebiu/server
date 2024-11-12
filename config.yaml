@@ -1,6 +1,6 @@
 server:
   host: 0.0.0.0
-  port: 1666
+  port: 2666
 # files_path: uploaded_files
 files_path: D:\a_source\test
 # database:
