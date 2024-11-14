@@ -3,26 +3,22 @@ import json
 
 
 class DirectoryTree:
-    def __init__(self, root_path):
-        self.root_path = root_path
-        self.tree = []
-
-    def build(self):
-        self.tree = self._build_directory_tree(self.root_path)
-
-    def _build_directory_tree(self, root_path):
+    def build_directory_tree(root_path,root_path_this=None):
         tree = []
-        root = Path(root_path)
+        if root_path_this is None:
+            root = Path(root_path)
+        else:
+            root = Path(root_path_this)
         for item in root.iterdir():
             tree_node = {}
             tree.append(tree_node)
             tree_node["label"] = item.name
             # 获取子目录相对于父目录的路径
-            relative_path = item.relative_to(self.root_path)
+            relative_path = item.relative_to(root_path)
             tree_node["path"] = str(relative_path)
             # 如果是目录，则递归构建子树
             if item.is_dir():
-                tree_node["children"] = self._build_directory_tree(item)
+                tree_node["children"] = DirectoryTree.build_directory_tree(root_path,item)
             # 如果是文件，则直接添加到树中
             else:
                 # st_size: 文件的大小，以字节为单位。
@@ -33,14 +29,28 @@ class DirectoryTree:
                 tree_node["size"] = tree_node_stat.st_size
         return tree
 
+    def build_dirFile_level_one(self, root_path):
+        tree = []
+        root = Path(root_path)
+        for item in root.iterdir():
+            tree_node = {}
+            tree.append(tree_node)
+            # 如果是目录，则递归构建子树
+            if item.is_dir():
+                tree_node["d"] = item.name
+            else:
+                tree_node["f"] = item.name
+                tree_node_stat = item.stat()
+                tree_node["size"] = tree_node_stat.st_size
+        return tree
+
 
 if __name__ == "__main__":
     current_dir = Path.cwd()  # 获取当前工作目录
-    directory_tree = DirectoryTree(current_dir)
-    directory_tree.build()
+    directory_tree = DirectoryTree.build_directory_tree(current_dir)
     # 将目录树转换为 JSON 格式
     json_tree = json.dumps(
-        directory_tree.tree,
+        directory_tree,
         #默认输出ASCLL码，False可以输出中文。
         ensure_ascii=False,
     )

@@ -51,12 +51,20 @@ class fileService:
         upload_folder = Path(upload_folder)
         # 实际存储路径
         current_dir = upload_folder / file_path
-        directory_tree = DirectoryTree(current_dir)
-        directory_tree.build()
-        return directory_tree.tree
+        directory_tree = DirectoryTree.build_directory_tree(current_dir)
+        return directory_tree
+    
+    # 根据路径获取单层目录树和文件信息
+    @staticmethod
+    def get_dirFile_level_one(file_path: str, upload_folder=files_path):
+        upload_folder = Path(upload_folder)
+        # 实际存储路径
+        current_dir = upload_folder / file_path
+        directory_tree = DirectoryTree.build_dirFile_level_one(current_dir)
+        return directory_tree
     
 
-    # 根据路径打开文件获取内容
+    # 根据路径流式打开文件获取内容
     @staticmethod
     async def open_file_stream(filename: str, upload_folder=files_path):
         """打开文件"""
