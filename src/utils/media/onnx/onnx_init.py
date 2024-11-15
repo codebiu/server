@@ -5,33 +5,33 @@ from skl2onnx.common.data_types import FloatTensorType
 import onnxruntime as ort
 
 def train_data():
-    # 定义固定的输入数据和目标值
+    '''定义固定的输入数据和目标值'''
     X = np.array([[1.0], [2.0], [3.0], [4.0]], dtype=np.float32)
     y = np.array([2.0, 4.0, 6.0, 8.0], dtype=np.float32)
     return X, y
 
 def train_model(X, y):
-    # 训练模型
+    '''训练模型'''
     model = LinearRegression()
     model.fit(X, y)
     
     return model
 
-def onnx_convert(model, X):
-    # 将模型转换为 ONNX 格式
+def onnx_convert(model, X): 
+    '''将模型转换为 ONNX 格式'''   
     initial_type = [('float_input', FloatTensorType([None, X.shape[1]]))]
     onnx_model = convert_sklearn(model, initial_types=initial_type)
     return onnx_model
 
 def onnx_save(path,onnx_model):
-    # 保存 ONNX 文件
+    '''保存 ONNX 文件'''
     with open(path, "wb") as f:
         f.write(onnx_model.SerializeToString())
 
     print("模型已成功转换并保存为 ONNX 格式。")
 
-# 推理
 def inference_onnx(model_path, input_data):
+    '''推理'''
     session = ort.InferenceSession(model_path)
     # 获取输入和输出的名称
     input_name = session.get_inputs()[0].name
