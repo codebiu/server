@@ -29,4 +29,6 @@ files_path: D:\a_source\test
     # user: root
     # password: root
     # database: test
+ai: 
+  qwen2: test
   
